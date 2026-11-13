@@ -48,18 +48,24 @@ var QUESTIONS = [
 /* ---------- ここを書き換える：③タイプ名・一言・結果文 ----------
    タイプは3〜4つ。記号（A/B/C/D）は②と合わせる。
    結果文は120字前後。商品名・利回り・将来の数字は入れない。
-   タイプ名で人を下に見る言葉（浪費型など）は使わない。            */
+   タイプ名で人を下に見る言葉（浪費型など）は使わない。
+   key は、結果のボタンを押したときLINEのトークに入る言葉。
+   LINE公式アカウントの応答メッセージのキーワードと同じにする。     */
 var TYPES = {
   A: { name: "🐧 ペンギン型",
+       key:  "ペンギン",
        one:  "前もって決める × ふたりで進める",
        text: "ペンギンのように、ふたり並んで同じ方向へ進むタイプ。得意なのは、前もって予定を立て、ふたりで納得してから動けること。つまずきやすい所は、きちんと決めようとするほど話し合いが長くなりやすいこと。1回のテーマを1つに絞ると、さらに進めやすくなります。LINE登録で、15分で終わる「夫婦のお金会議」進め方シートを送ります。" },
   B: { name: "🐝 ミツバチ型",
+       key:  "ミツバチ",
        one:  "その都度話す × 役割を分ける",
        text: "ミツバチのように、それぞれが自分の持ち場で軽やかに動くタイプ。得意なのは、気づいた方がすぐ動ける身軽さ。つまずきやすい所は、各自で進める分、家全体のお金の流れがつかみにくくなること。月に一度、全体を一緒に眺める時間をつくると、ふたりの動きがそろいやすくなります。LINE登録で、月1回の家計ふり返りチェックリストを送ります。" },
   C: { name: "🦫 ビーバー型",
+       key:  "ビーバー",
        one:  "前もって決める × 役割を分ける",
        text: "ビーバーがコツコツ巣を作るように、仕組みを整えるのが上手なタイプ。得意なのは、役割を分けて、それぞれが計画的に進められること。つまずきやすい所は、担当が分かれている分、相手の状況が見えにくくなること。ときどき共有の時間をつくると、お互いの進み具合を確かめやすくなります。LINE登録で、ふたりの役割分担を見える化するシートを送ります。" },
   D: { name: "🦦 ラッコ型",
+       key:  "ラッコ",
        one:  "その都度話す × ふたりで進める",
        text: "ラッコが手をつないで浮かぶように、日々の会話を大切にするタイプ。得意なのは、気になったことをその場でふたりで話し、柔軟に決められること。つまずきやすい所は、話したことが記録に残らず、あとで見返しにくいこと。決まったことを一言メモするだけで、次の話し合いが進めやすくなります。LINE登録で、話したことを残せるかんたんメモの型を送ります。" }
 };
@@ -69,8 +75,9 @@ var TYPES = {
    短縮URLは使わない。LINEが使えない人は mailto:あなたのメール でも可。   */
 var LINE = {
   button: "このタイプの方向けの1枚を、LINEで受け取る",
-  url:    "https://lin.ee/R4DYqnw",
-  note:   "登録しても、こちらから売り込みの連絡はしません。"
+  oaId:   "@376svqbu",               // LINE公式アカウントのID（@から書く）
+  url:    "https://lin.ee/R4DYqnw",  // 友だち追加URL（うまく開かないとき用）
+  note:   "LINEが開いたら、そのまま送信してください。あなたのタイプ向けの1枚が届きます。こちらから売り込みの連絡はしません。"
 };
 
 /* ===================== ここから下は触らない ===================== */
@@ -101,6 +108,7 @@ h1{font-size:28px;line-height:1.4;color:var(--navy);margin:14px 0 8px;font-weigh
 .btn{display:block;text-align:center;font-size:19px;font-weight:900;color:#fff;background:#06C755;border-radius:14px;padding:18px 16px;text-decoration:none;line-height:1.4}
 .btn:hover{filter:brightness(1.05)}
 .note{font-size:16px;color:var(--sub);text-align:center;margin:12px 0 0}
+.note a{color:var(--green);font-weight:700}
 .dis{font-size:16px;color:var(--sub);margin:18px 0 0;padding-top:14px;border-top:1px solid var(--line)}
 .start{font:inherit;display:block;width:100%;font-size:21px;font-weight:900;color:#fff;background:var(--green);border:0;border-radius:14px;padding:18px;cursor:pointer}
 footer{text-align:center;font-size:15px;color:var(--sub);margin-top:30px}
@@ -136,6 +144,7 @@ footer{text-align:center;font-size:15px;color:var(--sub);margin-top:30px}
     <p class="type-t" id="rText"></p>
     <a class="btn" id="rBtn" href="#" target="_blank" rel="noopener"></a>
     <p class="note" id="rNote"></p>
+    <p class="note">うまく開かないときは、<a id="rAddLink" href="#" target="_blank" rel="noopener">こちらから友だち追加</a>して、タイプ名を送ってください。</p>
     <p class="dis">この結果は、答えから見た傾向です。診断や断定ではありません。特定の商品をおすすめするものでもありません。</p>
     <div class="retry"><button class="back" id="retryBtn">もう一度やってみる</button></div>
   </section>
@@ -174,7 +183,9 @@ footer{text-align:center;font-size:15px;color:var(--sub);margin-top:30px}
                     : (together ? 'D' : 'B');  // D=ラッコ   / B=ミツバチ
     var T=TYPES[best];
     $('rName').textContent=T.name; $('rOne').textContent=T.one; $('rText').textContent=T.text;
-    $('rBtn').textContent=LINE.button; $('rBtn').href=LINE.url; $('rNote').textContent=LINE.note;
+    $('rBtn').textContent=LINE.button;
+    $('rBtn').href=(LINE.oaId&&T.key) ? 'https://line.me/R/oaMessage/'+encodeURIComponent(LINE.oaId)+'/?'+encodeURIComponent(T.key) : LINE.url;
+    $('rNote').textContent=LINE.note; $('rAddLink').href=LINE.url;
     show('result');
   }
   $('startBtn').onclick=function(){i=0;ans=[];render();show('quiz')};
