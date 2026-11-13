@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>話したことを残せる、かんたんメモの型</title>
+<meta property="og:title" content="話したことを残せる、かんたんメモの型">
+<meta property="og:description" content="🦦 ラッコ型のおふたりへ。お金の話し合いに使える1枚です。">
+<meta property="og:type" content="website">
+<style>
+:root{--paper:#F5FBF8;--white:#fff;--soft:#E3F3EE;--line:#C4E0D8;--navy:#0F4A40;--ink:#17332D;--sub:#44605A;--green:#008E78;--gold:#F07A1C;--gold-l:#FFE27A}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",sans-serif;font-weight:500;font-size:18px;line-height:1.8;-webkit-text-size-adjust:100%}
+.wrap{max-width:640px;margin:0 auto;padding:28px 16px 60px}
+header{text-align:center;margin-bottom:22px}
+.who{display:inline-block;font-size:16px;font-weight:700;color:var(--sub);background:var(--soft);border-radius:999px;padding:6px 16px}
+.pic{display:block;width:220px;max-width:100%;height:auto;margin:16px auto 4px}
+.type-k{font-size:16px;font-weight:700;color:var(--gold);letter-spacing:.1em;margin:0}
+h1 span{display:inline-block}
+h1{font-size:28px;line-height:1.4;color:var(--navy);margin:8px 0 8px;font-weight:900;text-wrap:balance}
+.lead{font-size:18px;color:var(--sub);margin:0}
+.card{background:var(--white);border:2px solid var(--line);border-radius:18px;padding:24px 20px;margin:16px 0}
+h2{font-size:22px;font-weight:900;color:var(--navy);line-height:1.5;margin:0 0 14px}
+.card p{margin:0 0 12px}
+.card p:last-child{margin-bottom:0}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.steps li{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;background:var(--soft);border-radius:14px;padding:14px 16px}
+.badge{font-size:16px;font-weight:900;color:#fff;background:var(--green);border-radius:999px;padding:2px 12px;white-space:nowrap;font-variant-numeric:tabular-nums;margin-top:2px}
+.steps b{display:block;color:var(--navy);font-size:19px}
+.steps span.s{display:block;color:var(--sub);font-size:17px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.chips li{font-size:17px;font-weight:700;color:var(--navy);background:var(--soft);border:2px solid var(--line);border-radius:999px;padding:4px 14px}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.checks label{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;cursor:pointer}
+.checks input{width:24px;height:24px;margin:5px 0 0;accent-color:var(--green)}
+.group{font-size:17px;font-weight:900;color:var(--gold);margin:18px 0 8px;letter-spacing:.05em}
+.group:first-of-type{margin-top:0}
+.fill{display:grid;gap:4px}
+.fill div{border-bottom:2px dashed var(--line);padding:14px 0 6px;font-size:16px;font-weight:700;color:var(--sub)}
+.tip{background:#FFF6D6;border:2px solid var(--gold-l);border-radius:14px;padding:14px 16px;margin-top:14px}
+.tip b{color:var(--gold)}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:17px}
+th,td{border-bottom:1px solid var(--line);padding:10px 6px;text-align:left;vertical-align:middle}
+th{color:var(--sub);font-size:15px;font-weight:700}
+td.c,th.c{text-align:center;white-space:nowrap;padding-left:4px;padding-right:4px}
+th.c{font-size:14px}
+td.c span{display:inline-block;width:24px;height:24px;border:2px solid var(--line);border-radius:50%}
+.memo{background:var(--soft);border-radius:14px;padding:14px 16px;font-size:17px}
+.memo dt{font-weight:900;color:var(--navy)}
+.memo dd{margin:0 0 6px}
+.how{font-size:16px;color:var(--sub);text-align:center;margin:0}
+.dis{font-size:16px;color:var(--sub);margin:18px 0 0;padding-top:14px;border-top:1px solid var(--line)}
+footer{text-align:center;font-size:15px;color:var(--sub);margin-top:30px}
+@media print{body{background:#fff;font-size:15px}.wrap{padding:0}.card{break-inside:avoid;margin:10px 0}.how{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="who">おのみちゆきこ｜家計の話し相手</span>
+    <svg class="pic" viewBox="0 0 240 160" role="img" aria-label="手をつないで水に浮かぶ2匹のラッコ">
+<g transform="translate(80 0)">
+<ellipse cx="0" cy="104" rx="30" ry="32" fill="#8B6A4E"/>
+<circle cx="-20" cy="52" r="7" fill="#7A5B42"/><circle cx="20" cy="52" r="7" fill="#7A5B42"/>
+<circle cx="0" cy="72" r="27" fill="#8B6A4E"/>
+<ellipse cx="0" cy="82" rx="18" ry="13" fill="#EBD8C2"/>
+<circle cx="-9" cy="68" r="4.5" fill="#FFFFFF"/><circle cx="9" cy="68" r="4.5" fill="#FFFFFF"/>
+<circle cx="-9" cy="69" r="2.6" fill="#17332D"/><circle cx="9" cy="69" r="2.6" fill="#17332D"/>
+<ellipse cx="0" cy="78" rx="5" ry="3.5" fill="#3B2A1E"/>
+<path d="M-5 84 Q0 88 5 84" stroke="#3B2A1E" stroke-width="1.6" fill="none"/>
+</g><g transform="translate(160 0)">
+<ellipse cx="0" cy="104" rx="30" ry="32" fill="#8B6A4E"/>
+<circle cx="-20" cy="52" r="7" fill="#7A5B42"/><circle cx="20" cy="52" r="7" fill="#7A5B42"/>
+<circle cx="0" cy="72" r="27" fill="#8B6A4E"/>
+<ellipse cx="0" cy="82" rx="18" ry="13" fill="#EBD8C2"/>
+<circle cx="-9" cy="68" r="4.5" fill="#FFFFFF"/><circle cx="9" cy="68" r="4.5" fill="#FFFFFF"/>
+<circle cx="-9" cy="69" r="2.6" fill="#17332D"/><circle cx="9" cy="69" r="2.6" fill="#17332D"/>
+<ellipse cx="0" cy="78" rx="5" ry="3.5" fill="#3B2A1E"/>
+<path d="M-5 84 Q0 88 5 84" stroke="#3B2A1E" stroke-width="1.6" fill="none"/>
+</g>
+<ellipse cx="104" cy="104" rx="18" ry="7" fill="#7A5B42" transform="rotate(-12 104 104)"/>
+<ellipse cx="136" cy="104" rx="18" ry="7" fill="#7A5B42" transform="rotate(12 136 104)"/>
+<circle cx="120" cy="100" r="8" fill="#6B4E38"/>
+<path d="M0 116 Q20 106 40 116 T80 116 T120 116 T160 116 T200 116 T240 116 V160 H0 Z" fill="#BFE6DC"/>
+<path d="M0 132 Q20 124 40 132 T80 132 T120 132 T160 132 T200 132 T240 132 V160 H0 Z" fill="#9AD6C7"/>
+</svg>
+    <p class="type-k">🦦 ラッコ型のおふたりへ</p>
+    <h1><span>話したことを残せる、</span><span>かんたんメモの型</span></h1>
+    <p class="lead">日々の会話で決まったことを、3行で残すための型です。</p>
+  </header>
+  <section class="card">
+    <h2>3行メモの型</h2>
+    <p>話したあとに、この3行だけ残します。</p>
+    <ol class="steps">
+      <li><span class="badge">1行目</span><div><b>いつ</b><span class="s">日にちと、どんな場面で話したか</span></div></li>
+      <li><span class="badge">2行目</span><div><b>なにを話したか</b><span class="s">テーマを一言で</span></div></li>
+      <li><span class="badge">3行目</span><div><b>決めたこと・まだのこと</b><span class="s">決まらなかったことも、そのまま書いておきます</span></div></li>
+    </ol>
+  </section>
+
+  <section class="card">
+    <h2>書き方の例</h2>
+    <dl class="memo">
+      <dt>いつ</dt><dd>11月3日、夕ごはんのあと</dd>
+      <dt>なにを話したか</dt><dd>冬休みの帰省のこと</dd>
+      <dt>決めたこと・まだのこと</dt><dd>新幹線は早めに予約する。おみやげの予算は次に話す。</dd>
+    </dl>
+  </section>
+
+  <section class="card">
+    <h2>残す場所のアイデア</h2>
+    <ul class="chips">
+      <li>スマホのメモ（ふたりで共有）</li><li>ふたりのトーク画面</li><li>冷蔵庫に貼る紙</li><li>家計簿の余白</li>
+    </ul>
+    <div class="tip"><b>続けるコツ</b><br>1行だけの日があっても大丈夫です。月末に一度、ふたりで見返す時間をつくると、話が前に進みやすくなります。</div>
+  </section>
+
+  <section class="card">
+    <h2>メモ欄</h2>
+    <div class="fill"><div>いつ</div><div>なにを話したか</div><div>決めたこと・まだのこと</div></div>
+    <div class="fill" style="margin-top:14px"><div>いつ</div><div>なにを話したか</div><div>決めたこと・まだのこと</div></div>
+  </section>
+
+  <p class="how">印刷するか、画面を保存して使えます。紙やスマホのメモに書き写しても大丈夫です。</p>
+  <section class="card" style="margin-top:16px">
+    <p class="dis" style="margin:0;padding:0;border:0">この1枚は、ご家庭でのお金の話し合いのきっかけづくりのためのものです。特定の商品をおすすめするものではありません。</p>
+  </section>
+  <footer>このページは おのみちゆきこ が作成しました。</footer>
+</div>
+</body>
+</html>
